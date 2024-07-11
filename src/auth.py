@@ -10,8 +10,8 @@ from neutronclient.v2_0.client import Client as NeutronClient
 # environment varialbes set at terminal:
 # export AUTH_SERVER=https://10.0.87.254; export AUTH_PASSWORD=password;
 
-
-TIMEOUT_SECONDS = 5
+# warning: this timeout would be the timeout for all the commands you run
+TIMEOUT_SECONDS = 30
 def start_session(auth_server : str,auth_password : str):
 
     logger.info(f'Contacting {auth_server}:5000/v3/ ...')
