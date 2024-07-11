@@ -7,7 +7,7 @@ from kubernetes import client, config
 
 TASK_PERIOD_SECONDS = 10
 RESTART_PERIOD_SECONDS = 10
-def main():
+def port_cleanup():
     auth_server = os.environ.get('AUTH_SERVER')
     if not auth_server:
         raise Exception("no auth server is in environment variables")
@@ -70,7 +70,7 @@ def main():
 if __name__=="__main__":
     while True:
         try:
-            main()
+            port_cleanup()
         except Exception as ex:
             logger.error(ex)
             logger.warning(traceback.format_exc())
