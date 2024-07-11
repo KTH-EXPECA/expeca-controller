@@ -1,4 +1,6 @@
-FROM python:3.8-alpine
+FROM python:3.8
+
+RUN apt-get update && apt-get install -y git
 
 WORKDIR /usr/src/app
 
@@ -7,4 +9,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./main.py" ]
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]

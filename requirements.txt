@@ -1,0 +1,15 @@
+fabric
+git
+gnocchiclient
+keystoneauth1
+openstacksdk
+paramiko
+loguru
+python-blazarclient @ git+https://github.com/ChameleonCloud/python-blazarclient.git
+python-cinderclient
+python-glanceclient
+python-ironicclient
+python-manilaclient
+python-neutronclient
+python-novaclient
+python-zunclient
