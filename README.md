@@ -2,11 +2,12 @@
 The service to address ExPECA testbed needs from Chameleon
 
 
-# Authentication setup
-
-Download admin's openrc file and map it to `/usr/src/app/openstack-openrc.sh` while running the container. Also, add admin password as an environment variable under the name `OS_PASSWORD_INPUT`.
 ```
-docker run -e OS_PASSWORD_INPUT='password' -v ~/expeca-controller/openstack-openrc.sh:/usr/src/app/openstack-openrc.sh -d samiemostafavi/expeca-controller
+docker build --no-cache . -t samiemostafavi/expeca-controller
+```
+
+```
+docker run -e AUTH_PASSWORD='admin_password' -e AUTH_SERVER='https://testbed.expeca.proj.kth.se' -it samiemostafavi/expeca-controller
 ```
 
 
