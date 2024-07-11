@@ -6,6 +6,7 @@ from kubernetes import client, config
 
 
 TASK_PERIOD_SECONDS = 10
+RESTART_PERIOD_SECONDS = 10
 def main():
     auth_server = os.environ.get('AUTH_SERVER')
     if not auth_server:
@@ -73,3 +74,4 @@ if __name__=="__main__":
         except Exception as ex:
             logger.error(ex)
             logger.warning(traceback.format_exc())
+        time.sleep(RESTART_PERIOD_SECONDS)
