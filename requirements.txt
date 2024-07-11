@@ -1,15 +1,4 @@
-fabric
-gnocchiclient
 keystoneauth1
-openstacksdk
-paramiko
 loguru
-python-chi @ git+https://github.com/KTH-EXPECA/python-chi
-python-blazarclient @ git+https://github.com/ChameleonCloud/python-blazarclient.git
-python-cinderclient
-python-glanceclient
-python-ironicclient
-python-manilaclient
 python-neutronclient
-python-novaclient
-python-zunclient
+kubernetes

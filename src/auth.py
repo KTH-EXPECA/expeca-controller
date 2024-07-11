@@ -2,6 +2,7 @@ import os, sys, signal
 from loguru import logger
 from keystoneauth1 import session
 from keystoneauth1.identity import v3
+from neutronclient.v2_0.client import Client as NeutronClient
 
 # environment variables must be set for authentication of admin on openstack project this in openstack horizon:
 # AUTH_SERVER=https://10.0.87.254,AUTH_PASSWORD=password
@@ -10,7 +11,7 @@ from keystoneauth1.identity import v3
 # export AUTH_SERVER=https://10.0.87.254; export AUTH_PASSWORD=password;
 
 
-TIMEOUT_SECONDS = 1
+TIMEOUT_SECONDS = 5
 def start_session(auth_server : str,auth_password : str):
 
     logger.info(f'Contacting {auth_server}:5000/v3/ ...')
@@ -27,5 +28,7 @@ def start_session(auth_server : str,auth_password : str):
     ks_session = session.Session(auth=auth,timeout=TIMEOUT_SECONDS)
     token = ks_session.get_token()
     logger.info(f"Authentication was successful, produced token: {token}")
+
+    return ks_session
 
 
