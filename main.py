@@ -59,6 +59,21 @@ def port_cleanup():
         logger.warning(f"identified {len(dangling_indices)} blacklisted ports")
         for dang_id in dangling_indices:
             dangling_port = expeca_ports[dang_id]
+
+            # Lets do a final check, maybe the port is created but the pod is not ready
+            logger.warning(f"checking the blacklisted port {dangling_port['name']}")
+            # wait 5x2 seconds
+            found_it = False
+            for _ in range(5):
+                time.sleep(2)
+                pods = v1.list_pod_for_all_namespaces(watch=False)
+                for pod in pods.items:
+                    if dangling_port['name'] in pod.metadata.name:
+                        found_it = True
+            if found_it:
+                logger.info(f"Found the blacklisted port {dangling_port['name']}, no need to delete it.")
+                continue
+
             logger.warning(f"removing port {dangling_port['name']}")
             net_cli.delete_port(dangling_port['id'])
 
