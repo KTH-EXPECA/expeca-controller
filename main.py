@@ -5,6 +5,7 @@ from neutronclient.v2_0.client import Client as NeutronClient
 from kubernetes import client, config
 
 
+TASK_PERIOD_SECONDS = 10
 def main():
     auth_server = os.environ.get('AUTH_SERVER')
     if not auth_server:
@@ -31,7 +32,6 @@ def main():
 
 
     # Repeat the task
-    TASK_PERIOD_SECONDS = 10
     while True:
         ports = net_cli.list_ports()['ports']
 
@@ -60,16 +60,16 @@ def main():
             dangling_port = expeca_ports[dang_id]
             logger.warning(f"removing port {dangling_port['name']}")
             net_cli.delete_port(dangling_port['id'])
-        
+
         logger.info(f"Restart in {TASK_PERIOD_SECONDS} seconds")
 
 
         time.sleep(TASK_PERIOD_SECONDS)
 
 if __name__=="__main__":
-    try:
-        main()
-    except Exception as ex:
-        logger.error(ex)
-        logger.warning(traceback.format_exc())
-        sys.exit(1)
+    while True:
+        try:
+            main()
+        except Exception as ex:
+            logger.error(ex)
+            logger.warning(traceback.format_exc())
