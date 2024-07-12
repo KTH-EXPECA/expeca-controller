@@ -1,6 +1,7 @@
 keystoneauth1
 loguru
 python-neutronclient
+python-blazarclient
 kubernetes
 flask
 jsonify

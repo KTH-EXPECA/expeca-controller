@@ -36,13 +36,13 @@ def port_cleanup():
     while True:
         ports = net_cli.list_ports()['ports']
 
-        logger.info(f"Number of total ports: {len(ports)}")
+        # logger.info(f"Number of total ports: {len(ports)}")
         expeca_ports = []
         for port in ports:
             if 'zun' in port['name'] and port['binding:vnic_type'] == 'baremetal':
                 expeca_ports.append(port)
 
-        logger.info(f"Number of expeca baremetal ports: {len(expeca_ports)}")
+        # logger.info(f"Number of expeca baremetal ports: {len(expeca_ports)}")
 
         # List all pods in all namespaces
         pods = v1.list_pod_for_all_namespaces(watch=False)
@@ -56,7 +56,9 @@ def port_cleanup():
                     dangling_indices.remove(port_index)
                     # logger.info(f"Found port {port_index} related to the pod {pod.metadata.name}")
 
-        logger.warning(f"identified {len(dangling_indices)} blacklisted ports")
+        if len(dangling_indices) > 0:
+            logger.warning(f"identified {len(dangling_indices)} blacklisted ports")
+
         for dang_id in dangling_indices:
             dangling_port = expeca_ports[dang_id]
 
