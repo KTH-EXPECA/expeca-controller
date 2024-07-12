@@ -109,7 +109,7 @@ if __name__ == '__main__':
     # get keystone authentication session
     ks_session = start_session(auth_server,auth_password)
     blazar_cli = BlazarClient(session=ks_session)
-    blazer_cli_base = BlazarClientBase(blazar_url='https://testbed.expeca.proj.kth.se:1234/v1',auth_token=ks_session.get_token(),session='')
+    blazer_cli_base = BlazarClientBase(blazar_url=f"{auth_server}:1234/v1",auth_token=ks_session.get_token(),session='')
 
     # fix k8s clients
     config.load_kube_config(config_file=kubeconfig_path)
