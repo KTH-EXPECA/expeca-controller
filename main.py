@@ -79,7 +79,7 @@ def port_cleanup():
             logger.warning(f"removing port {dangling_port['name']}")
             net_cli.delete_port(dangling_port['id'])
 
-        logger.info(f"Restart in {TASK_PERIOD_SECONDS} seconds")
+        #logger.info(f"Restart in {TASK_PERIOD_SECONDS} seconds")
 
 
         time.sleep(TASK_PERIOD_SECONDS)

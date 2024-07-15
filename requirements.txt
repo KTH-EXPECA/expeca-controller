@@ -1,4 +1,6 @@
 keystoneauth1
+netmiko
+ntc-templates
 loguru
 python-neutronclient
 python-blazarclient
