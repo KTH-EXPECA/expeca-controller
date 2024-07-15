@@ -297,6 +297,14 @@ def answer_get():
                                 **check_switch_port(port_id, interfaces_parsed, vlans_parsed, portid_name_mapping) 
                             } 
                         }
+                        port_id = bmnet[1]["binding-profile"]["local_link_information"][0]["port_id"]
+                        result = { 
+                            **result, 
+                            bmnet[1]['name']: { 
+                                "segment_id" : network['segment_id'], 
+                                **check_switch_port(port_id, interfaces_parsed, vlans_parsed, portid_name_mapping) 
+                            } 
+                        }
 
             if result == {}:
                 return jsonify({"error": "Requested device does not exist"}), 400
