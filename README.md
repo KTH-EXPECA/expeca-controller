@@ -13,7 +13,7 @@ for develop, run these on the controller machine
 ```
 AUTH_SERVER=https://testbed.expeca.proj.kth.se AUTH_PASSWORD=<admin-password> KUBECONFIG_PATH=~/.kube/config python main.py
 AUTH_SERVER=https://testbed.expeca.proj.kth.se AUTH_PASSWORD=<admin-password> KUBECONFIG_PATH=~/.kube/config python server.py
-AUTH_SERVER=https://testbed.expeca.proj.kth.se AUTH_PASSWORD=<admin-password> KUBECONFIG_PATH=~/.kube/config python server_2.py
+AUTH_PASSWORD=<admin-password> AUTH_SERVER='http://10.20.111.99' KUBECONFIG_PATH=~/.kube/config SWITCH_PASSWORD=<tenant-switch-password> python server_2.py
 ```
 
 To test the HTTP servers:
