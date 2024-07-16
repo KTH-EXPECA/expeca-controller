@@ -190,6 +190,16 @@ def worker_answer(worker : str, nad_list, interfaces_parsed, vlans_parsed, porti
     global k8s_v1_client
     global k8s_api
 
+    # first check if it up and running
+    node = k8s_v1_client.read_node(name=worker)
+    # Check the conditions to determine if the node is Ready or NotReady
+    for condition in node.status.conditions:
+        if condition.type == "Ready":
+            node_ready_status = condition.status
+    # Print the node readiness status
+    if node_ready_status != "True":
+        result = 'NotReady'
+        return result
 
     # List all NetworkAttachmentDefinitions in the cluster
     interfaces = set()
@@ -218,17 +228,18 @@ def worker_answer(worker : str, nad_list, interfaces_parsed, vlans_parsed, porti
         for pod in pods.items:
             if 'zun' in pod.metadata.name:
                 dict_pod = pod.to_dict()
-                nets_dict = json.loads(dict_pod['metadata']['annotations']['k8s.v1.cni.cncf.io/network-status'])
-                if worker in dict_pod['spec']['node_name']:
-                    for net_dict in nets_dict:
-                        if interface in net_dict['name']:
-                            del net_dict['name']
-                            result[short_if_name]['connections'].append(
-                                    {
-                                        'container_id' : dict_pod['metadata']['labels']['zun.openstack.org/uuid'],
-                                        **net_dict
-                                    }
-                                )
+                if 'k8s.v1.cni.cncf.io/network-status' in dict_pod['metadata']['annotations']:
+                    nets_dict = json.loads(dict_pod['metadata']['annotations']['k8s.v1.cni.cncf.io/network-status'])
+                    if worker in dict_pod['spec']['node_name']:
+                        for net_dict in nets_dict:
+                            if interface in net_dict['name']:
+                                del net_dict['name']
+                                result[short_if_name]['connections'].append(
+                                        {
+                                            'container_id' : dict_pod['metadata']['labels']['zun.openstack.org/uuid'],
+                                            **net_dict
+                                        }
+                                    )
     return result
 
 @app.route('/', methods=['GET'])
