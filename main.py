@@ -67,7 +67,7 @@ def port_cleanup():
             # wait 5x2 seconds
             found_it = False
             for _ in range(5):
-                time.sleep(2)
+                time.sleep(4)
                 pods = v1.list_pod_for_all_namespaces(watch=False)
                 for pod in pods.items:
                     if dangling_port['name'] in pod.metadata.name:
